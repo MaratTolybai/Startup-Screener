@@ -40,14 +40,15 @@
       padding:36px 40px;
       border:1px solid rgba(0,120,208,.10);
       box-shadow:0 22px 70px rgba(11,18,32,.12);
+      text-align:left;
     }
 
-    .brand-header{
+    .header{
       text-align:center;
       margin-bottom:22px;
     }
 
-    .brand-logo{
+    .logo{
       width:140px;
       margin:0 auto 10px;
       display:block;
@@ -57,14 +58,15 @@
       margin:0 0 8px;
       font-size:26px;
       font-weight:700;
+      letter-spacing:-0.2px;
     }
 
     .subtitle{
       color:var(--muted);
       font-size:14px;
-      max-width:680px;
-      margin:0 auto;
       line-height:1.45;
+      max-width:700px;
+      margin:0 auto;
     }
 
     label{
@@ -78,18 +80,23 @@
     input, select, textarea{
       width:100%;
       margin-top:8px;
-      padding:12px 12px;
+      padding:12px;
       border-radius:12px;
       border:1px solid var(--line);
       font-size:14px;
-      outline:none;
       background:#fff;
+      outline:none;
+      text-align:left;
+      transition:border-color .15s ease, box-shadow .15s ease;
     }
 
-    textarea{ min-height:110px; resize:vertical; }
+    textarea{
+      min-height:110px;
+      resize:vertical;
+    }
 
     input:focus, select:focus, textarea:focus{
-      border-color:rgba(0,120,208,.7);
+      border-color:rgba(0,120,208,.70);
       box-shadow:0 0 0 4px rgba(0,120,208,.16);
     }
 
@@ -97,9 +104,10 @@
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:16px;
+      margin-top:10px;
     }
 
-    @media(max-width:760px){
+    @media (max-width:760px){
       .row{ grid-template-columns:1fr; }
       .container{ padding:26px 24px; }
     }
@@ -111,12 +119,12 @@
     }
 
     button{
-      cursor:pointer;
+      flex:1;
       border:none;
       border-radius:14px;
       padding:14px;
       font-size:15px;
-      flex:1;
+      cursor:pointer;
     }
 
     .btn-primary{
@@ -131,33 +139,32 @@
       border:1px solid rgba(0,120,208,.18);
     }
 
+    .field-error{
+      color:#B42318;
+      font-size:12px;
+      margin-top:6px;
+    }
+
     .result{
       margin-top:24px;
       padding:16px;
       border-radius:16px;
       display:none;
-      border:1px solid;
+      border:1px solid rgba(0,0,0,.06);
     }
+    .result.success{ background:#ECFDF3; color:#14532d; border-color:rgba(20,83,45,.16); }
+    .result.danger{ background:#FEF3F2; color:#7A1C1C; border-color:rgba(180,35,24,.16); }
 
-    .pass{
-      background:#ECFDF3;
-      color:#14532D;
-      border-color:#86EFAC;
-    }
-
-    .fail{
-      background:#FEF2F2;
-      color:#7F1D1D;
-      border-color:#FCA5A5;
-    }
+    .result h3{ margin:0 0 8px 0; }
+    .meta{ margin-top:10px; font-size:13px; color:rgba(11,18,32,.72); }
   </style>
 </head>
 
 <body>
   <div class="container">
 
-    <div class="brand-header">
-      <img src="Activat-logo.png" class="brand-logo" alt="Activat VC">
+    <div class="header">
+      <img class="logo" src="Activat-logo.png" alt="Activat VC">
       <h1>Первичный скрининг стартапов</h1>
       <div class="subtitle">
         Заполните анкету, чтобы понять, подходит ли ваш стартап под критерии компании Activat VC.
@@ -166,24 +173,26 @@
 
     <label>Тип бизнеса *</label>
     <select id="businessType">
-      <option value="">Выберите вариант</option>
-      <option value="it">IT / digital продукт</option>
-      <option value="offline">Офлайн-бизнес (кафе, салон, мойка и т.п.)</option>
+      <option value="" selected>Выберите вариант</option>
+      <option value="product">Технологический продукт / платформа / SaaS</option>
+      <option value="service">Онлайн-сервис (в т.ч. маркетплейс)</option>
+      <option value="itservice">IT/цифровой сервис с возможностью масштабирования</option>
+      <option value="offline">Традиционный офлайн-бизнес (кафе, салон, автомойка и т.п.)</option>
     </select>
 
     <label>Название стартапа *</label>
     <input id="name" placeholder="Введите название стартапа">
 
     <label>Краткое описание проекта *</label>
-    <textarea id="description" placeholder="Что вы делаете, для кого и какую проблему решаете?"></textarea>
+    <textarea id="desc" placeholder="Что вы делаете, для кого и какую проблему решаете?"></textarea>
 
     <div class="row">
       <div>
         <label>Отрасль *</label>
         <select id="industry">
-          <option value="">Выберите отрасль</option>
+          <option value="" selected>Выберите отрасль</option>
           <option value="fintech">FinTech</option>
-          <option value="insurtech">InsureTech</option>
+          <option value="insuretech">InsureTech</option>
           <option value="proptech">PropTech</option>
           <option value="legaltech">LegalTech</option>
           <option value="healthtech">HealthTech</option>
@@ -195,44 +204,45 @@
           <option value="martech">MarTech</option>
           <option value="adtech">AdTech</option>
           <option value="hrtech">HRTech</option>
-          <option value="cyber">CyberSecurity</option>
-          <option value="auto">AutoTech & Mobility</option>
+          <option value="cybersecurity">CyberSecurity</option>
+          <option value="autotech">AutoTech & Mobility</option>
           <option value="robotics">Robotics</option>
           <option value="spacetech">SpaceTech</option>
-          <option value="ai">AI / ML</option>
-          <option value="climate">ClimateTech / CleanTech</option>
+          <option value="aiml">AI / ML</option>
+          <option value="climatetech">ClimateTech / CleanTech</option>
           <option value="biotech">BioTech</option>
-          <option value="deeptech">DeepTech</option>
-          <option value="blockchain">Blockchain / Crypto</option>
-          <option value="gambling">Gambling</option>
           <option value="govtech">GovTech</option>
+
+          <!-- запрещённые для Activat VC -->
+          <option value="blockchain">Blockchain / Crypto / DeFi</option>
+          <option value="deeptech">DeepTech</option>
+          <option value="gambling">Gambling</option>
         </select>
       </div>
 
       <div>
         <label>Стадия развития *</label>
         <select id="stage">
-          <option value="">Выберите стадию</option>
-          <option>Pre-seed</option>
-          <option>Seed</option>
-          <option>Round A</option>
-          <option>Round B+</option>
+          <option value="" selected>Выберите стадию</option>
+          <option value="preseed">Pre-seed</option>
+          <option value="seed">Seed</option>
+          <option value="rounda">Round A</option>
         </select>
       </div>
     </div>
 
     <label>Происхождение и текущее место проживания фаундеров *</label>
-    <select id="geo">
-      <option value="">Выберите вариант</option>
-      <option value="cis_ok">Выходцы из СНГ, проживают вне РФ/РБ</option>
-      <option value="cis_bad">Граждане РФ или РБ, проживают в РФ/РБ</option>
-      <option value="other">Не из СНГ</option>
+    <select id="geography">
+      <option value="" selected>Выберите вариант</option>
+      <option value="cis_out">Выходцы из стран СНГ, проживают за пределами РФ и РБ</option>
+      <option value="cis_ru">Выходцы из стран СНГ, проживают в РФ или РБ</option>
+      <option value="non_cis">Фаундеры не из стран СНГ</option>
     </select>
 
     <div class="row">
       <div>
-        <label>Email *</label>
-        <input id="email" placeholder="you@email.com">
+        <label>Email для связи *</label>
+        <input id="email" placeholder="your@email.com">
       </div>
       <div>
         <label>WhatsApp или Telegram *</label>
@@ -241,41 +251,115 @@
     </div>
 
     <div class="actions">
-      <button class="btn-primary" onclick="check()">Отправить на оценку</button>
-      <button class="btn-secondary" onclick="location.reload()">Очистить форму</button>
+      <button type="button" class="btn-primary" onclick="evaluate()">Отправить на оценку</button>
+      <button type="button" class="btn-secondary" onclick="resetForm()">Очистить форму</button>
     </div>
 
-    <div id="result" class="result"></div>
+    <div class="result" id="result"></div>
   </div>
 
-<script>
-function check(){
-  const fail = [];
+  <script>
+    function el(id){ return document.getElementById(id); }
 
-  if(businessType.value === "offline"){
-    fail.push("Офлайн-бизнес не является IT-стартапом.");
-  }
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
 
-  if(["blockchain","deeptech","gambling"].includes(industry.value)){
-    fail.push("Выбранная отрасль не входит в инвестиционный мандат Activat VC.");
-  }
+    function setResult(type, title, message, meta){
+      const box = el("result");
+      box.className = "result " + type;
+      box.style.display = "block";
+      box.innerHTML = `
+        <h3>${title}</h3>
+        <div>${message}</div>
+        ${meta ? `<div class="meta">${meta}</div>` : ``}
+      `;
+      box.scrollIntoView({ behavior:"smooth", block:"start" });
+    }
 
-  if(geo.value !== "cis_ok"){
-    fail.push("Фаундеры должны быть выходцами из СНГ и проживать вне РФ/РБ.");
-  }
+    function clearErrors(){
+      document.querySelectorAll(".field-error").forEach(n => n.remove());
+      document.querySelectorAll("input,select,textarea").forEach(x=>{
+        x.style.borderColor = "";
+        x.style.boxShadow = "";
+      });
+    }
 
-  const box = document.getElementById("result");
+    function markError(node, text){
+      node.style.borderColor = "#ef4444";
+      node.style.boxShadow = "0 0 0 3px rgba(239,68,68,0.15)";
+      const d = document.createElement("div");
+      d.className = "field-error";
+      d.textContent = text;
+      node.insertAdjacentElement("afterend", d);
+    }
 
-  if(fail.length){
-    box.className = "result fail";
-    box.innerHTML = "<b>NON PASS</b><br><br>" + fail.join("<br>");
-  } else {
-    box.className = "result pass";
-    box.innerHTML = "<b>PASS</b><br><br>Проект соответствует инвестиционному мандату Activat VC и может быть рассмотрен на следующем этапе.";
-  }
+    function validate(){
+      clearErrors();
+      let ok = true;
 
-  box.style.display = "block";
-}
-</script>
+      const req = ["businessType","name","desc","industry","stage","geography","email","messenger"];
+      req.forEach(id=>{
+        const node = el(id);
+        const v = (node.value||"").trim();
+        if(!v){ markError(node, "Это поле обязательно"); ok=false; }
+      });
+
+      const email = (el("email").value||"").trim();
+      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      if(!emailOk){ markError(el("email"), "Укажите корректный email"); ok=false; }
+
+      return ok;
+    }
+
+    function resetForm(){
+      ["businessType","industry","stage","geography"].forEach(id=> el(id).selectedIndex = 0);
+      ["name","desc","email","messenger"].forEach(id=> el(id).value = "");
+      clearErrors();
+      el("result").style.display = "none";
+      el("result").innerHTML = "";
+      window.scrollTo({ top:0, behavior:"smooth" });
+    }
+
+    function evaluate(){
+      if(!validate()) return;
+
+      const businessType = el("businessType").value;
+      const industry = el("industry").value;
+      const geography = el("geography").value;
+
+      if(businessType === "offline"){
+        setResult("danger","❌ NON PASS",
+          "Проект относится к традиционному офлайн-бизнесу и не соответствует инвестиционному мандату Activat VC.","");
+        return;
+      }
+
+      if(["blockchain","deeptech","gambling"].includes(industry)){
+        setResult("danger","❌ NON PASS",
+          "Проект относится к отрасли, в которую Activat VC принципиально не инвестирует.","");
+        return;
+      }
+
+      if(geography === "cis_ru" || geography === "non_cis"){
+        setResult("danger","❌ NON PASS",
+          "Activat VC рассматривает стартапы, основанные фаундерами — выходцами из стран СНГ, проживающими за пределами России и Беларуси.","");
+        return;
+      }
+
+      const name = escapeHtml((el("name").value||"").trim());
+      const email = escapeHtml((el("email").value||"").trim());
+      const messenger = escapeHtml((el("messenger").value||"").trim());
+
+      setResult("success","✅ PASS",
+        `Стартап <strong>${name}</strong> прошёл базовые фильтры мандата Activat VC.`,
+        `Контакты: ${email} · ${messenger}`
+      );
+    }
+  </script>
 </body>
 </html>
