@@ -28,8 +28,8 @@
         linear-gradient(135deg, var(--bg1), var(--bg2));
       min-height:100vh;
       display:flex;
-      justify-content:center;
       align-items:center;
+      justify-content:center;
       padding:28px;
     }
 
@@ -37,37 +37,33 @@
       width:min(940px, 96vw);
       background:#fff;
       border-radius:22px;
-      padding:34px 40px;
+      padding:36px 40px;
       border:1px solid rgba(0,120,208,.10);
       box-shadow:0 22px 70px rgba(11,18,32,.12);
-      text-align:left; /* важно: форма и заголовки полей всегда слева */
     }
 
-    .header{
-      text-align:center; /* центрируем только шапку */
+    .brand-header{
+      text-align:center;
       margin-bottom:22px;
     }
 
-    .logo{
-      width:160px;
-      max-width:60vw;
-      height:auto;
+    .brand-logo{
+      width:140px;
+      margin:0 auto 10px;
       display:block;
-      margin:0 auto 10px auto;
     }
 
     h1{
-      margin:0 0 8px 0;
+      margin:0 0 8px;
       font-size:26px;
-      line-height:1.2;
-      letter-spacing:-0.2px;
+      font-weight:700;
     }
 
     .subtitle{
-      margin:0 auto;
-      max-width:720px;
       color:var(--muted);
       font-size:14px;
+      max-width:680px;
+      margin:0 auto;
       line-height:1.45;
     }
 
@@ -76,29 +72,24 @@
       margin-top:16px;
       font-weight:600;
       font-size:13px;
-      text-align:left; /* на всякий случай */
+      text-align:left;
     }
 
     input, select, textarea{
       width:100%;
       margin-top:8px;
-      padding:12px;
+      padding:12px 12px;
       border-radius:12px;
       border:1px solid var(--line);
       font-size:14px;
-      background:#fff;
       outline:none;
-      transition:border-color .15s ease, box-shadow .15s ease;
-      text-align:left; /* на всякий случай */
+      background:#fff;
     }
 
-    textarea{
-      min-height:110px;
-      resize:vertical;
-    }
+    textarea{ min-height:110px; resize:vertical; }
 
     input:focus, select:focus, textarea:focus{
-      border-color:rgba(0,120,208,.70);
+      border-color:rgba(0,120,208,.7);
       box-shadow:0 0 0 4px rgba(0,120,208,.16);
     }
 
@@ -106,14 +97,11 @@
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:16px;
-      margin-top:10px;
-      text-align:left; /* на всякий случай */
     }
 
-    @media (max-width:760px){
-      .container{ padding:22px; }
+    @media(max-width:760px){
       .row{ grid-template-columns:1fr; }
-      .logo{ width:140px; }
+      .container{ padding:26px 24px; }
     }
 
     .actions{
@@ -122,17 +110,14 @@
       margin-top:22px;
     }
 
-    .actions button{
-      flex:1;
-      padding:14px;
-      font-size:15px;
+    button{
+      cursor:pointer;
       border:none;
       border-radius:14px;
-      cursor:pointer;
-      transition:transform .05s ease, filter .15s ease, box-shadow .15s ease;
+      padding:14px;
+      font-size:15px;
+      flex:1;
     }
-
-    .actions button:active{ transform:translateY(1px); }
 
     .btn-primary{
       color:#fff;
@@ -140,26 +125,10 @@
       box-shadow:0 10px 22px rgba(0,120,208,.25);
     }
 
-    .btn-primary:hover{ filter:brightness(1.03); }
-
     .btn-secondary{
       background:#F1F7FF;
       color:var(--brand-dark);
       border:1px solid rgba(0,120,208,.18);
-    }
-
-    .btn-secondary:hover{ filter:brightness(.99); }
-
-    .field-error{
-      color:#B42318;
-      font-size:12px;
-      margin-top:6px;
-    }
-
-    .hint{
-      margin-top:6px;
-      font-size:12px;
-      color:rgba(11,18,32,.70);
     }
 
     .result{
@@ -167,22 +136,28 @@
       padding:16px;
       border-radius:16px;
       display:none;
-      border:1px solid rgba(0,0,0,.06);
+      border:1px solid;
     }
 
-    .result.success{ background:#ECFDF3; color:#14532d; border-color:rgba(20,83,45,.16); }
-    .result.danger{ background:#FEF3F2; color:#7A1C1C; border-color:rgba(180,35,24,.16); }
-    .result.info{ background:#EEF5FF; color:#083253; border-color:rgba(0,120,208,.18); }
+    .pass{
+      background:#ECFDF3;
+      color:#14532D;
+      border-color:#86EFAC;
+    }
 
-    .result h3{ margin:0 0 8px 0; }
-    .meta{ margin-top:10px; font-size:13px; color:rgba(11,18,32,.72); }
+    .fail{
+      background:#FEF2F2;
+      color:#7F1D1D;
+      border-color:#FCA5A5;
+    }
   </style>
 </head>
 
 <body>
   <div class="container">
-    <div class="header">
-      <img class="logo" src="Activat-logo.png" alt="Activat VC">
+
+    <div class="brand-header">
+      <img src="Activat-logo.png" class="brand-logo" alt="Activat VC">
       <h1>Первичный скрининг стартапов</h1>
       <div class="subtitle">
         Заполните анкету, чтобы понять, подходит ли ваш стартап под критерии компании Activat VC.
@@ -190,79 +165,74 @@
     </div>
 
     <label>Тип бизнеса *</label>
-    <select id="businessType" required>
-      <option value="" selected disabled>Выберите вариант</option>
-      <option value="product">Технологический продукт / платформа / SaaS</option>
-      <option value="service">Онлайн-сервис (в т.ч. маркетплейс)</option>
-      <option value="itservice">IT/цифровой сервис с возможностью масштабирования</option>
-      <option value="offline">Традиционный офлайн-бизнес (кафе, салон, автомойка и т.п.)</option>
+    <select id="businessType">
+      <option value="">Выберите вариант</option>
+      <option value="it">IT / digital продукт</option>
+      <option value="offline">Офлайн-бизнес (кафе, салон, мойка и т.п.)</option>
     </select>
 
     <label>Название стартапа *</label>
     <input id="name" placeholder="Введите название стартапа">
 
     <label>Краткое описание проекта *</label>
-    <textarea id="desc" placeholder="Что вы делаете, для кого и какую проблему решаете? (лучше 2–4 предложения)"></textarea>
-    <div class="hint">Совет: проблема → решение → клиент → чем вы лучше конкурентов.</div>
+    <textarea id="description" placeholder="Что вы делаете, для кого и какую проблему решаете?"></textarea>
 
     <div class="row">
       <div>
         <label>Отрасль *</label>
-        <select id="industry" required>
-          <option value="" selected disabled>Выберите отрасль</option>
-
-          <option value="fintech">FinTech (Financial Technology)</option>
-          <option value="insuretech">InsureTech (Insurance Technology)</option>
-          <option value="proptech">PropTech (Property Technology)</option>
-          <option value="legaltech">LegalTech (Legal Technology)</option>
-          <option value="healthtech">HealthTech (Healthcare Technology)</option>
-          <option value="edtech">EdTech (Educational Technology)</option>
-          <option value="agritech">AgriTech (Agricultural Technology)</option>
-          <option value="foodtech">FoodTech (Food Technology)</option>
-          <option value="logtech">LogTech (Logistics Technology)</option>
-          <option value="retailtech">RetailTech (Retail Technology)</option>
-          <option value="martech">MarTech (Marketing Technology)</option>
-          <option value="adtech">AdTech (Advertising Technology)</option>
-          <option value="hrtech">HRTech (Human Resources Tech)</option>
-          <option value="cybersecurity">CyberSecurity (Cyber Security)</option>
-          <option value="autotech">AutoTech & Mobility</option>
-          <option value="robotics">Robotics (Robotics Technology)</option>
-          <option value="spacetech">SpaceTech (Space Technology)</option>
-          <option value="aiml">AI/ML (Artificial Intelligence / Machine Learning)</option>
-          <option value="climatetech">ClimateTech / CleanTech</option>
-          <option value="biotech">BioTech (Biotechnology)</option>
-          <option value="govtech">GovTech (Government Technology)</option>
-
-          <!-- Запрещённые отрасли (строгий NON PASS) -->
-          <option value="blockchain">Blockchain / Crypto / DeFi</option>
-          <option value="deeptech">DeepTech (Deep Technology)</option>
+        <select id="industry">
+          <option value="">Выберите отрасль</option>
+          <option value="fintech">FinTech</option>
+          <option value="insurtech">InsureTech</option>
+          <option value="proptech">PropTech</option>
+          <option value="legaltech">LegalTech</option>
+          <option value="healthtech">HealthTech</option>
+          <option value="edtech">EdTech</option>
+          <option value="agritech">AgriTech</option>
+          <option value="foodtech">FoodTech</option>
+          <option value="logtech">LogTech</option>
+          <option value="retailtech">RetailTech</option>
+          <option value="martech">MarTech</option>
+          <option value="adtech">AdTech</option>
+          <option value="hrtech">HRTech</option>
+          <option value="cyber">CyberSecurity</option>
+          <option value="auto">AutoTech & Mobility</option>
+          <option value="robotics">Robotics</option>
+          <option value="spacetech">SpaceTech</option>
+          <option value="ai">AI / ML</option>
+          <option value="climate">ClimateTech / CleanTech</option>
+          <option value="biotech">BioTech</option>
+          <option value="deeptech">DeepTech</option>
+          <option value="blockchain">Blockchain / Crypto</option>
           <option value="gambling">Gambling</option>
+          <option value="govtech">GovTech</option>
         </select>
       </div>
 
       <div>
         <label>Стадия развития *</label>
-        <select id="stage" required>
-          <option value="" selected disabled>Выберите стадию</option>
-          <option value="preseed">Pre-seed</option>
-          <option value="seed">Seed</option>
-          <option value="seriesa">Series A</option>
+        <select id="stage">
+          <option value="">Выберите стадию</option>
+          <option>Pre-seed</option>
+          <option>Seed</option>
+          <option>Round A</option>
+          <option>Round B+</option>
         </select>
       </div>
     </div>
 
     <label>Происхождение и текущее место проживания фаундеров *</label>
-    <select id="geography" required>
-      <option value="" selected disabled>Выберите вариант</option>
-      <option value="cis_out">Выходцы из стран СНГ, проживают за пределами РФ и РБ</option>
-      <option value="cis_ru">Выходцы из стран СНГ, проживают в РФ или РБ</option>
-      <option value="non_cis">Фаундеры не из стран СНГ</option>
+    <select id="geo">
+      <option value="">Выберите вариант</option>
+      <option value="cis_ok">Выходцы из СНГ, проживают вне РФ/РБ</option>
+      <option value="cis_bad">Граждане РФ или РБ, проживают в РФ/РБ</option>
+      <option value="other">Не из СНГ</option>
     </select>
 
     <div class="row">
       <div>
-        <label>Email для связи *</label>
-        <input id="email" placeholder="your@email.com">
+        <label>Email *</label>
+        <input id="email" placeholder="you@email.com">
       </div>
       <div>
         <label>WhatsApp или Telegram *</label>
@@ -271,160 +241,41 @@
     </div>
 
     <div class="actions">
-      <button type="button" class="btn-primary" onclick="evaluate()">Отправить на оценку</button>
-      <button type="button" class="btn-secondary" onclick="resetForm()">Очистить форму</button>
+      <button class="btn-primary" onclick="check()">Отправить на оценку</button>
+      <button class="btn-secondary" onclick="location.reload()">Очистить форму</button>
     </div>
 
-    <div class="result" id="result"></div>
+    <div id="result" class="result"></div>
   </div>
 
-  <script>
-    function getEl(id){ return document.getElementById(id); }
+<script>
+function check(){
+  const fail = [];
 
-    function setResult(type, title, message, metaText){
-      const result = getEl("result");
-      result.className = "result " + type;
-      result.style.display = "block";
-      result.innerHTML = `
-        <h3>${title}</h3>
-        <div>${message}</div>
-        ${metaText ? `<div class="meta">${metaText}</div>` : ``}
-      `;
-      result.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+  if(businessType.value === "offline"){
+    fail.push("Офлайн-бизнес не является IT-стартапом.");
+  }
 
-    function showError(el, message){
-      el.style.borderColor = "#ef4444";
-      el.style.boxShadow = "0 0 0 3px rgba(239,68,68,0.15)";
-      if (!el.dataset._err){
-        const err = document.createElement("div");
-        err.className = "field-error";
-        err.textContent = message;
-        el.insertAdjacentElement("afterend", err);
-        el.dataset._err = "1";
-      } else {
-        const next = el.nextElementSibling;
-        if (next && next.classList.contains("field-error")) next.textContent = message;
-      }
-    }
+  if(["blockchain","deeptech","gambling"].includes(industry.value)){
+    fail.push("Выбранная отрасль не входит в инвестиционный мандат Activat VC.");
+  }
 
-    function clearError(el){
-      el.style.borderColor = "var(--line)";
-      el.style.boxShadow = "none";
-      if (el.dataset._err){
-        const next = el.nextElementSibling;
-        if (next && next.classList.contains("field-error")) next.remove();
-        delete el.dataset._err;
-      }
-    }
+  if(geo.value !== "cis_ok"){
+    fail.push("Фаундеры должны быть выходцами из СНГ и проживать вне РФ/РБ.");
+  }
 
-    function validate(){
-      const requiredIds = ["businessType","name","desc","industry","stage","geography","email","messenger"];
-      let ok = true;
+  const box = document.getElementById("result");
 
-      requiredIds.forEach(id => {
-        const el = getEl(id);
-        const v = (el.value || "").trim();
-        if (!v){ showError(el, "Это поле обязательно"); ok = false; }
-        else clearError(el);
-      });
+  if(fail.length){
+    box.className = "result fail";
+    box.innerHTML = "<b>NON PASS</b><br><br>" + fail.join("<br>");
+  } else {
+    box.className = "result pass";
+    box.innerHTML = "<b>PASS</b><br><br>Проект соответствует инвестиционному мандату Activat VC и может быть рассмотрен на следующем этапе.";
+  }
 
-      const email = getEl("email");
-      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((email.value || "").trim());
-      if (!emailOk){ showError(email, "Укажите корректный email"); ok = false; }
-      else clearError(email);
-
-      const desc = getEl("desc");
-      if ((desc.value || "").trim().length < 30){
-        showError(desc, "Добавьте описание (минимум 30 символов)");
-        ok = false;
-      } else clearError(desc);
-
-      return ok;
-    }
-
-    function resetForm(){
-      ["businessType","name","desc","industry","stage","geography","email","messenger"].forEach(id => {
-        const el = getEl(id);
-        if (!el) return;
-        if (el.tagName === "SELECT") el.selectedIndex = 0;
-        else el.value = "";
-        clearError(el);
-      });
-      const result = getEl("result");
-      result.style.display = "none";
-      result.innerHTML = "";
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    function escapeHtml(str){
-      return String(str)
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-    }
-
-    function evaluate(){
-      if (!validate()) return;
-
-      const businessType = getEl("businessType").value;
-      const industry = getEl("industry").value;
-      const geography = getEl("geography").value;
-
-      // 1) Строгий фильтр: офлайн-бизнес
-      if (businessType === "offline"){
-        setResult(
-          "danger",
-          "❌ NON PASS",
-          "Фонд инвестирует в технологические и масштабируемые стартапы. Проект относится к категории традиционного офлайн-бизнеса и не соответствует инвестиционному мандату Activat VC.",
-          ""
-        );
-        return;
-      }
-
-      // 2) Строгий фильтр: запрещённые отрасли
-      const forbiddenIndustries = ["blockchain","deeptech","gambling"];
-      if (forbiddenIndustries.includes(industry)){
-        const map = {
-          blockchain: "Blockchain / Crypto / DeFi",
-          deeptech: "DeepTech",
-          gambling: "Gambling"
-        };
-        setResult(
-          "danger",
-          "❌ NON PASS",
-          `Проект относится к отрасли, в которую Activat VC принципиально не инвестирует: <strong>${map[industry] || "запрещённая категория"}</strong>.`,
-          ""
-        );
-        return;
-      }
-
-      // 3) Строгий фильтр: география фаундеров
-      if (geography === "cis_ru" || geography === "non_cis"){
-        setResult(
-          "danger",
-          "❌ NON PASS",
-          "Activat VC инвестирует в стартапы, основанные фаундерами — выходцами из стран СНГ, которые проживают за пределами России и Беларуси.",
-          ""
-        );
-        return;
-      }
-
-      // PASS
-      const name = escapeHtml((getEl("name").value || "").trim());
-      const email = escapeHtml((getEl("email").value || "").trim());
-      const messenger = escapeHtml((getEl("messenger").value || "").trim());
-
-      setResult(
-        "success",
-        "✅ PASS (мандат пройден)",
-        `Спасибо! Стартап <strong>${name}</strong> прошёл базовые фильтры мандата Activat VC. Следующий шаг — запрос питч-дека и уточнение traction, unit-экономики, TAM и конкурентов.`,
-        `Контакты: ${email} · ${messenger}`
-      );
-    }
-  </script>
+  box.style.display = "block";
+}
+</script>
 </body>
 </html>
-
